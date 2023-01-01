@@ -1,6 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import { alpha } from '@mui/material/styles';
+import { ToastStyle } from '../styles/toast';
+import { GLOBAL_BORDER_RADIUS,GLOBAL_BOX_SHADOW } from './helpers/constants';
 
 // Create a theme instance.
 const theme = createTheme({
@@ -22,6 +24,9 @@ const theme = createTheme({
       default: "#fdfffc"
     }
   },
+  typography: {
+    fontFamily: `'Poppins', 'sans-serif'`
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: `
@@ -31,11 +36,11 @@ const theme = createTheme({
         }
 
         ::-webkit-scrollbar-track {
-          background: ${alpha("#fdfffc",0.01)};
+          background: ${alpha("#fdfffc", 0.01)};
         }
 
         ::-webkit-scrollbar-thumb {
-          background: ${alpha("#a6ff80",0.4)};
+          background: ${alpha("#334c28", 0.4)};
           border-radius: 10px;
           cursor: pointer;
         }
@@ -48,7 +53,34 @@ const theme = createTheme({
           text-decoration: none;
           color: unset;
         }
+
+        ${ToastStyle}
       `
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.light, 0.2),
+            color: theme.palette.primary.dark
+          },
+          '&.Mui-selected': {
+            backgroundColor: alpha(theme.palette.primary.light, 0.2),
+            color: theme.palette.primary.dark
+          }
+        })
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: ({theme}) => ({
+          borderRadius: `${GLOBAL_BORDER_RADIUS}px`,
+          '&.MuiButton-containedPrimary:hover': {
+            backgroundColor: theme.palette.secondary.main,
+            color: "white"
+          }
+        })
+      }
     }
   }
 });

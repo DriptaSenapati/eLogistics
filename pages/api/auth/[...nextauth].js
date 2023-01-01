@@ -67,6 +67,7 @@ export const authOptions = {
                 if(res.status !== 200){
                     return `/signin?error=${resjson.error}`
                 }
+                user.uid = resjson.uid
                 return true;
             }
 

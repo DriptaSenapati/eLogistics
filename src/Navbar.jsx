@@ -35,7 +35,7 @@ const Navbar = () => {
 
 
 
-    
+
 
     const handleOpenUserMenu = (event) => {
         console.log(event.currentTarget)
@@ -49,7 +49,7 @@ const Navbar = () => {
 
 
 
-    const settings = session ? ["Profile", "Sign Out"] : ["Sign In"];
+    const settings = session ? ["Your Account", "Sign Out"] : ["Sign In"];
 
 
 
@@ -59,14 +59,16 @@ const Navbar = () => {
                 <Toolbar
                     sx={{}}
                 >
-                    <Box sx={{ flexGrow: { xs: 1, md: 0 } }}>
-                        <Image
-                            src={profilePic}
-                            alt="logo"
-                            height={40}
-                            width={120}
-                        />
-                    </Box>
+                    <Link href="/">
+                        <Box sx={{ flexGrow: { xs: 1, md: 0 },cursor: "pointer" }}>
+                            <Image
+                                src={profilePic}
+                                alt="logo"
+                                height={40}
+                                width={120}
+                            />
+                        </Box>
+                    </Link>
                     <NavAddress styles={{
                         textAlign: "center",
                         flexGrow: 1,

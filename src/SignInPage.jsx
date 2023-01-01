@@ -12,6 +12,7 @@ import { siginSchema } from "./../src/schema";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from 'next/router';
 
+
 const SignInPage = ({ setFormVal, formVal, style, setForm, notify }) => {
     const { showPassword: _, ...formValue } = formVal;
 
@@ -33,7 +34,7 @@ const SignInPage = ({ setFormVal, formVal, style, setForm, notify }) => {
                     .then(async (response) => {
                         if (response.status === 200) {
                             const session = await getSession();
-                            console.log(session);
+                            // console.log(session);
                             response.success = "Successfully Logged In";
                             response.user = session.user.name;
                             return resolve(response)

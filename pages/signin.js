@@ -11,7 +11,6 @@ import SignInPage from '../src/SignInPage';
 import SignUpPage from '../src/SignUpPage';
 import { useWindowSize } from 'react-use';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 

@@ -12,7 +12,9 @@ export default async function handler(req, res) {
         const db_data = docSnap.data();
 
         if (db_data.provider === "google") {
-            return res.status(200).json("Successfully Logged In!")
+            return res.status(200).json({
+                uid: db_data.uid
+            })
         }
         return res.status(401).json({
             error: `Email Id already registered! via ${docSnap.data().provider}`

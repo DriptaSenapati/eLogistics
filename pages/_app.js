@@ -11,6 +11,11 @@ import Navbar from "../src/Navbar";
 import { SessionProvider } from "next-auth/react"
 import { ToastContainer } from 'react-toastify';
 import Auth from '../src/Auth';
+import './../styles/nprogress.css'
+import NProgress from 'nprogress'
+import { useRouter } from 'next/router'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastCloseButton } from '../src/helpers/utils';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -18,16 +23,27 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } } = props;
 
-  React.useEffect(() => {
-    const { innerWidth: width, innerHeight: height } = window;
+  const router = useRouter()
 
-    setTimeout(function () {
-      let viewheight = height;
-      let viewwidth = width;
-      let viewport = document.querySelector("meta[name=viewport]");
-      viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-    }, 300);
-  }, [])
+  React.useEffect(() => {
+    const handleStart = () => {
+      NProgress.start()
+    }
+
+    const handleStop = () => {
+      NProgress.done()
+    }
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+  }, [router])
 
 
   return (
@@ -42,7 +58,7 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Navbar/>
+          <Navbar />
           {
             Boolean(Component.auth) ?
               <Auth componentProps={Component.auth}>
@@ -51,7 +67,7 @@ export default function MyApp(props) {
               <Component {...pageProps} />
           }
 
-          <ToastContainer />
+          <ToastContainer closeButton={ToastCloseButton}/>
         </ThemeProvider>
       </SessionProvider>
     </CacheProvider>
